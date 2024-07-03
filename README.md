@@ -269,3 +269,10 @@ module Multi_part
     end
 endmodule
 
+## outputs
+
+![image](https://github.com/alihendi21/LUMOS/assets/170606621/b0611ca2-84be-4b5d-a585-debb8b02a382)
+
+
+
+
