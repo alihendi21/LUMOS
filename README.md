@@ -49,7 +49,9 @@ module Fixed_Point_Unit
     output reg ready
 );
 ```
-
+## Combinational Logic for Arithmetic Operations
+The combinational logic block computes the result based on the selected operation.
+```
     always @(*)
     begin
         case (operation)
@@ -60,6 +62,7 @@ module Fixed_Point_Unit
             default     : begin result = 'bz; ready = 0; end
         endcase
     end
+```
 
     always @(posedge reset)
     begin
