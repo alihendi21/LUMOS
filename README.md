@@ -27,7 +27,7 @@ operation: 2-bit signal used to select the desired arithmetic operation (additio
 ## Outputs
 result: Output register that stores the result of the arithmetic operation.
 ready: Flag indicating whether the result is ready to be read.
-## Code Fixed_point_unit :
+## Module Declaration and Parameters :
 ```
 `include "Defines.vh"
 
@@ -48,6 +48,7 @@ module Fixed_Point_Unit
     output reg [WIDTH - 1 : 0] result,
     output reg ready
 );
+```
 
     always @(*)
     begin
@@ -255,7 +256,7 @@ module Multiplier
         product <= operand_1 * operand_2;
     end
 endmodule
-```
+
 ##full report
 
 
