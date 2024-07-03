@@ -151,9 +151,16 @@ Behavior: It progresses through stages (2'b00 to 2'b01 to 2'b10) by setting sqrt
         end
     end
 ```
-    // ------------------ //
-    // Multiplier Circuit //
-    // ------------------ //   
+Purpose: This block performs the iterative square root calculation when sqrt_start is active (sqrt_start is set in the state machine logic).
+Behavior:
+Initializes necessary variables (sqrt_busy, i, q, ac, x) when sqrt_start is asserted.
+Iteratively computes the square root using a Newton-Raphson method:
+Updates x, ac, and q for each iteration (i increases).
+Stops when i reaches ITER-1 and sets root to q_next.
+Signals root_ready when the square root computation is complete.
+## Multiplication Circuit
+Registers and Signals
+  ``` 
     reg [64 - 1 : 0] product;
     reg product_ready;
 
@@ -175,13 +182,24 @@ Behavior: It progresses through stages (2'b00 to 2'b01 to 2'b10) by setting sqrt
 
     reg [2 : 0] multiplication_stage;
     reg [2 : 0] next_multiplication_stage;
+```
+product and product_ready: Hold the result and signal completion for the multiplication operation.
+multiplierCircuitInput1 and multiplierCircuitInput2: Inputs to the multiplier circuit.
+multiplierCircuitResult: Output from the multiplier circuit (Multiplier module).
+partialProduct1, partialProduct2, partialProduct3, partialProduct4: Hold intermediate results of multiplication.
+multiplication_stage and next_multiplication_stage: Manage stages of the multiplication process.
 
+## State Machine for Multiplication
+```
     always @(posedge clk) 
     begin
         if (operation == `FPU_MUL)  multiplication_stage <= next_multiplication_stage;
         else                        multiplication_stage <= 'b0;
     end
-
+```
+Purpose: Controls the state transitions for the multiplication operation based on the operation input.
+## Multiplication Stages Logic
+```
     always @(*) 
     begin
         next_multiplication_stage <= 'bz;
@@ -238,23 +256,14 @@ Behavior: It progresses through stages (2'b00 to 2'b01 to 2'b10) by setting sqrt
             default: next_multiplication_stage <= 3'b000;
         endcase    
     end
-endmodule
+```
 
-module Multiplier
-(
-    input wire [15 : 0] operand_1,
-    input wire [15 : 0] operand_2,
-
-    output reg [31 : 0] product
-);
-
-    always @(*)
-    begin
-        product <= operand_1 * operand_2;
-    end
-endmodule
-
-##full report
+Purpose: Controls the flow of the multiplication operation through different stages (3'b000 to 3'b101).
+Behavior:
+Initializes inputs and intermediate results (partialProduct1 to partialProduct4) at the beginning (3'b000).
+Sequentially calculates partial products (partialProduct1 to partialProduct4) using the Multiplier module (multiplierCircuitResult).
+Combines these partial products (product) to get the final result when all stages are completed (3'b101).
+Signals product_ready when the multiplication operation is finished.
 
 
 ## outputs
