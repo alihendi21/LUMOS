@@ -67,7 +67,7 @@ Addition and Subtraction: Simple arithmetic operations.
 Multiplication: Uses a separate product signal and ready flag.
 Square Root: Uses intermediate signals for square root calculation.
 Default: Sets result and ready to high-impedance state ('bz) if the operation is not recognized.
-##Reset Logic
+## Reset Logic
 The reset block resets the ready signal on a positive edge of the reset signal.
 ```
     always @(posedge reset)
@@ -76,7 +76,7 @@ The reset block resets the ready signal on a positive edge of the reset signal.
         else        ready = 'bz;
     end
 ```
-##Square Root Circuit
+## Square Root Circuit
 The square root circuit includes intermediate registers and a state machine to perform the calculation.
 
 Intermediate Registers and State Machine
@@ -108,11 +108,12 @@ Intermediate Registers and State Machine
         endcase    
     end
 ```
-Registers for Square Root Calculation: root stores the square root result, root_ready indicates readiness.
+## Registers for Square Root Calculation:
+root stores the square root result, root_ready indicates readiness.
 State Machine for Square Root Calculation: Manages the stages of the square root calculation.
 Clock and State Transition: Updates the current stage (square_root_stage) based on next_square_root_stage when the clock signal (clk) is asserted.
 Combinational Logic for State Transition: Determines the next_square_root_stage based on the current square_root_stage.
-##Additional Registers for Square Root Calculation
+## Additional Registers for Square Root Calculation
 ```
     reg sqrt_start;
     reg sqrt_busy;
@@ -122,7 +123,7 @@ Combinational Logic for State Transition: Determines the next_square_root_stage 
     reg [WIDTH + 1 : 0] ac, ac_next;            
     reg [WIDTH + 1 : 0] test_res;               
 ```
-##Control Signals:
+## Control Signals:
 sqrt_start initiates the square root calculation, sqrt_busy indicates ongoing computation.
 Intermediate Variables: x, q, and ac are used for the internal calculation of the square root.
 
