@@ -6,6 +6,7 @@
 - Student ID: 99413262
 - Date: 2024/05/25
 ## Code Fixed_point_unit :
+```
 `include "Defines.vh"
 
 module Fixed_Point_Unit 
@@ -232,6 +233,7 @@ module Multiplier
         product <= operand_1 * operand_2;
     end
 endmodule
+```
 ##full report
 
 
