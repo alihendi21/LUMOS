@@ -6,9 +6,10 @@
 - Student ID: 99413262
 - Date: 2024/05/25
 
-## Report
+## Overview
 
- Fixed Point Unit is reviewed, which is implemented in Verilog language. This unit is able to perform addition, subtraction, multiplication and square root operations. The purpose of this report is to fully explain each part of the code, review the various operations, and how to load and use values ​​in registers. Introduction of Fixed Point Unit, which is implemented in this project, is written in Verilog language and has various inputs that produce appropriate output depending on the type of operation. This unit includes various modules such as addition, subtraction, multiplication and square root calculation modules, which will be explained in detail below.
+
+The provided Verilog code implements a Fixed-Point Unit (FPU) capable of performing various arithmetic operations such as addition, subtraction, multiplication, and square root calculations. The module is parameterized to handle fixed-point numbers of configurable width and fractional bits.
 
 ## Code Fixed_point_unit :
 
