@@ -77,17 +77,19 @@ The reset block resets the ready signal on a positive edge of the reset signal.
     end
 ```
 ## Square Root Circuit
-The square root circuit includes intermediate registers and a state machine to perform the calculation.
-
-Intermediate Registers and State Machine
-
+Registers and Signals
  ```   
     reg [WIDTH - 1 : 0] root;
     reg root_ready;
 
     reg [1 : 0] square_root_stage;
     reg [1 : 0] next_square_root_stage;
-
+ ```   
+root: Holds the current approximation of the square root.
+root_ready: Indicates when the square root computation is complete and root is valid.
+square_root_stage and next_square_root_stage: Control the stages of the square root calculation.
+## State Machine for Square Root Calculation
+```
     always @(posedge clk) 
     begin
         if (operation == `FPU_SQRT) square_root_stage <= next_square_root_stage;
@@ -97,7 +99,11 @@ Intermediate Registers and State Machine
             root_ready <= 0;
         end
     end 
-
+```
+Purpose: This block manages the state transitions for the square root calculation based on the operation input.
+Behavior: When operation is FPU_SQRT, it advances through different stages (square_root_stage). Otherwise, it resets to the initial state (2'b00) and clears root_ready.
+## State Transition Logic
+```
     always @(*) 
     begin
         next_square_root_stage <= 'bz;
@@ -108,46 +114,12 @@ Intermediate Registers and State Machine
         endcase    
     end
 ```
-## Registers for Square Root Calculation:
-root stores the square root result, root_ready indicates readiness.
-State Machine for Square Root Calculation: Manages the stages of the square root calculation.
-Clock and State Transition: Updates the current stage (square_root_stage) based on next_square_root_stage when the clock signal (clk) is asserted.
-Combinational Logic for State Transition: Determines the next_square_root_stage based on the current square_root_stage.
-## Additional Registers for Square Root Calculation
-```
-    reg sqrt_start;
-    reg sqrt_busy;
-    
-    reg [WIDTH - 1 : 0] x, x_next;              
-    reg [WIDTH - 1 : 0] q, q_next;              
-    reg [WIDTH + 1 : 0] ac, ac_next;            
-    reg [WIDTH + 1 : 0] test_res;               
-```
-## Control Signals:
-sqrt_start initiates the square root calculation, sqrt_busy indicates ongoing computation.
-Intermediate Variables: x, q, and ac are used for the internal calculation of the square root.
+Purpose: Determines the next stage (next_square_root_stage) based on the current stage (square_root_stage).
+Behavior: It progresses through stages (2'b00 to 2'b01 to 2'b10) by setting sqrt_start appropriately.
+## Square Root Calculation Process
 
-    reg valid;
-
-    localparam ITER = (WIDTH + FBITS) >> 1;     
-    reg [4 : 0] i = 0;                              
-
-    always @(*)
-    begin
-        test_res = ac - {q, 2'b01};
-
-        if (test_res[WIDTH + 1] == 0) 
-        begin
-            {ac_next, x_next} = {test_res[WIDTH - 1 : 0], x, 2'b0};
-            q_next = {q[WIDTH - 2 : 0], 1'b1};
-        end 
-        else 
-        begin
-            {ac_next, x_next} = {ac[WIDTH - 1 : 0], x, 2'b0};
-            q_next = q << 1;
-        end
-    end
-    
+  
+ ```   
     always @(posedge clk) 
     begin
         if (sqrt_start)
@@ -178,7 +150,7 @@ Intermediate Variables: x, q, and ac are used for the internal calculation of th
             end
         end
     end
-
+```
     // ------------------ //
     // Multiplier Circuit //
     // ------------------ //   
