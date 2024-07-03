@@ -11,7 +11,7 @@
 
 The provided Verilog code implements a Fixed-Point Unit (FPU) capable of performing various arithmetic operations such as addition, subtraction, multiplication, and square root calculations. The module is parameterized to handle fixed-point numbers of configurable width and fractional bits.
 
-## Code Fixed_point_unit :
+## 1. Module Declaration and Parameters :
 
 module Fixed_point_part 
 #(parameter WIDTH = 32,parameter FBITS = 10)
