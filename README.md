@@ -6,15 +6,15 @@
 - Student ID: 99413262
 - Date: 2024/05/25
 
-Fixed-Point Unit (FPU) Module
+##Fixed-Point Unit (FPU) Module:
 This repository contains the Verilog implementation of a Fixed-Point Unit (FPU) capable of performing various arithmetic operations such as addition, subtraction, multiplication, and square root calculations. The module is parameterized to handle fixed-point numbers of configurable width and fractional bits.
-Overview
+##Overview:
 The FPU module performs arithmetic operations on fixed-point numbers. It supports the following operations:
 
-Addition
-Subtraction
-Multiplication
-Square Root
+-Addition
+-Subtraction
+-Multiplication
+-Square Root
 Parameters
 WIDTH: Defines the bit-width of the operands and results. Default is 32 bits.
 FBITS: Specifies the number of fractional bits in the fixed-point representation. Default is 10 bits.
